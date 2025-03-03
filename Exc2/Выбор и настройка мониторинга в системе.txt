@@ -1,0 +1,46 @@
+Мотивация:
+Мониторинг необходим, чтобы видеть как ведут себя сервисы при увеличении нагрузки и своевременно реагировать на возникшие проблемы, а не ждать пока придут жалобы от пользователей.
+
+Выбор подхода к мониторингу:
+- RED для API сервисов: Shop API, CRM API, MES API
+- USE для storages и очередей: Shop DB, MES db, Message Queue, 3d files storage
+- 4 золотых сигнала для фронта: Internet Shop, CRM, MES
+
+Выбранные метрики:
+
+Messages queue:
+- Number of dead-letter-exchange letters in RabbitMQ: количество необработанных сообщений. Какой-то из сервисов не справляется с обработкой сообщений
+- Number of message in flight in RabbitMQ:
+	ярлыки:
+		- queue_priority - чтобы видеть сообщения по приоритетам
+		- message_type - чтобы понять на каком сервисе завис или находится заказ
+
+Shop API:
+- Number of requests (RPS) for internet shop API - следить за нагрузкой на сервис
+- Response time (latency) for shop API - видеть время ответа при разной нагрузке
+- Number of HTTP 500 for shop API - показывает проблемы в имлементации
+- CPU %
+- Memory Utilisation - чтобы выявить использование памяти возросло из-за возросшей нагрузки, или из-за проблемы в реализвции
+- Number of simultanious sessions for shop API - чтобы понять нужно ли масшабирование или может долго обрабатываются запросы и зависают
+	ярлыки:
+		- endpoint - чтобы понять на каком endpoint возникла проблема
+CRM API:
+- тоже, что и Shop API
+
+MES API:
+- тоже, что и Shop API
+
+
+shop db - в целом видеть состояние БД и понимать может нужно что-то оптимизировать или масштабировать
+- Memory Utilisation for shop db instance
+- Number of connections for shop db instance
+
+MES db
+- тоже, что и shop db
+
+Size of S3 storage - чтобы отреагировать если место заканчивается
+
+План действий:
+- Создать инстанс time-series базы с использованием Prometheus
+- собрать все необходимые метрики
+- настроить Grafana для визуализации и алертинга
