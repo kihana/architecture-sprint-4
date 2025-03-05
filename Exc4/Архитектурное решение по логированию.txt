@@ -21,7 +21,7 @@ WARN - некритические ошибки. Введены неправил�
 Предлагаемое решение:
 Сбор логов будет реализован при помощи: Filebeat, Logstach, Elasticsearch и Kibana
 
-ссылка на схему: 
+ссылка на схему: https://github.com/kihana/architecture-sprint-4/blob/sprint4/Exc4/jewerly_c4_model_log.drawio
 
 Доступ к логам будут иметь пользователи с ролью "Поддержка" или DevOps. Чувствительные данные вообще лучше не собирать.
 
