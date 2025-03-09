@@ -1,0 +1,25 @@
+@startuml
+
+actor Operator as Operator
+collections Cache as Cache
+database Database as Database
+
+participant Operator order 10
+participant Cache order 20
+participant Database order 30
+
+Database-->Cache:Preload list of orders
+Operator->Cache:Request list of orders
+activate Cache
+Cache-->Operator:Response list of orders
+deactivate Cache
+Operator->Cache:Update order state
+activate Cache
+Cache->Database:Update order state
+activate Database
+Database-->Cache:Update order state done
+deactivate Database
+Cache-->Operator:Update order state done
+deactivate Cache
+
+@enduml
